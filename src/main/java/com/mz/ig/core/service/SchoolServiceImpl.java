@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.mz.ig.core.entity.SchoolEntity;
 import com.mz.ig.core.entity.UserEntity;
 import com.mz.ig.core.repository.ISchoolRepository;
+import com.mz.ig.core.exception.ResourceNotFoundException;
 
 /**
  * Arnancio Langane
@@ -26,5 +27,28 @@ public class SchoolServiceImpl implements ISchoolService {
 	public List<SchoolEntity> findAll() {
 		return this.schoolRepository.findAll();
 	}
+
+        @Override
+        public SchoolEntity updateSchoolById(UserEntity loggedUser, Long id,SchoolEntity school){
+        SchoolEntity updatedSchool = this.schoolRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("school not found"));
+                     updatedSchool.setName(school.getName());
+                     updatedSchool.setContact(school.getContact());
+                     updatedSchool.setEmail(school.getEmail());
+                     updatedSchool.setAddress(school.getAddress());
+                     updatedSchool.setPhoneNumber(school.getPhoneNumber());
+                     updatedSchool.setNuit(school.getNuit());
+
+                     return this.schoolRepository.save(updatedSchool);
+        }
+
+     @Override
+      public void deleteSchoolById(UserEntity loggedUser, Long id){
+      if(!this.schoolRepository.existsById(id){
+          throw new ResourceNotFoundException("School not found");
+     }
+        schoolRepository.deleteById(id);
+     }
+
+
 
 }
