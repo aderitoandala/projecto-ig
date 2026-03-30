@@ -42,7 +42,7 @@ public abstract class LifeCycleEntity implements Serializable {
 
     // ===== CREATED BY =====
     @CreatedBy
-    @Column(name = "CREATED_BY", nullable = false, updatable = false)
+    @Column(name = "CREATED_BY", nullable = true, updatable = false)
     private Long createdBy;
 
     // ===== DATES =====
